@@ -16,3 +16,15 @@ pip install Flask
 - database: gnx
 - senha: 3f@db
 - API key: 8193de3c
+
+## aaa
+```python
+res = {
+    'id': 2,
+    'cachorro': 'black',
+    'raça': 'negão'
+}
+
+d = res['id']
+print(d)
+``` 
