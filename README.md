@@ -1,5 +1,5 @@
 # GNX
-GNX é uma ferramenta responsável por adquirir informações sobre um filme em cartaz. Com a GNX você pode pesquisar por um nome e encontrar tudo a respeito de um título das telas quentes do cinema.
+GNX é uma ferramenta responsável por adquirir informações sobre um filme em cartaz. Com a GNX você pode pesquisar por um nome e encontrar tudo a respeito de um título das telas quentes do cinema.<br>
 
 ## Instalação
 
