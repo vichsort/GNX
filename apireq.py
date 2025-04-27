@@ -18,30 +18,24 @@ def sender(caller):
         'title': informacao
     })
 
-    if (caller == "name"):
-        chamarName(informacao)
-    elif (caller == "id"):
-        chamarId(informacao)
-    else:
-        print("invalid type")
+    if (caller == "title" or caller == "id"):
+        call(informacao, caller)
 
     return caller
 
-@app.route("/caller/name", methods=["GET"])
-def chamarName(param):
-    print(param + " recebido com sucesso")
-    response = requests.get(url + "t=" + param)
+@app.route("/call", methods=["GET"])
+def call(param, caller):
+    print(param + " recebido com sucesso, tipo: " + caller)
+    if (caller == "title"):
+        caller = "t="
+    else:
+        caller = "i="
+    response = requests.get(url + caller + param)
     if (response.status_code == 200):
         print("tudo certo com a requisição.")
         print(response.text)
     else:
         print('erro! ' + response.status_code)
-
-
-@app.route("/caller/id", methods=["GET"])
-def chamarId(param):
-    print(param + " smth")
-
 
 
 
