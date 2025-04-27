@@ -1,6 +1,8 @@
 from flask import Flask, request
+import requests
 import uuid
 
+url = 'http://www.omdbapi.com/?apikey=8193de3c&' # lembrar de esconder a apikey
 listreq = []
 
 app = Flask(__name__)
@@ -27,7 +29,14 @@ def sender(caller):
 
 @app.route("/caller/name", methods=["GET"])
 def chamarName(param):
-    print(param + "insane")
+    print(param + " recebido com sucesso")
+    response = requests.get(url + "t=" + param)
+    if (response.status_code == 200):
+        print("tudo certo com a requisição.")
+        print(response.text)
+    else:
+        print('erro! ' + response.status_code)
+
 
 @app.route("/caller/id", methods=["GET"])
 def chamarId(param):
