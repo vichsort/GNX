@@ -8,5 +8,31 @@
 </head>
 <body>
     <h1>Works!</h1>
+    <form action="/submit" method="post">
+        <div class="container">
+            <label for="primeiro-nome">Insira seu primeiro nome:</label>
+            <input type="text" name="primeiro-nome" id="primeiro-nome" placeholder="Judas">
+
+            <label for="segundo-nome">Insira seu segundo nome:</label>
+            <input type="text" name="segundo-nome" id="segundo-nome" placeholder="dos Santos">
+        </div>
+
+        <div class="container">
+            <label for="idade">Insira sua idade:</label>
+            <input type="number" name="idade" id="idade" max="90">
+
+            <label for="cpf">Insira seu CPF:</label>
+            <input type="text" name="cpf" id="cpf" maxlength="11" placeholder="999.999-99">
+        </div>
+
+        <div class="container">
+            <label for="email">Insira seu e-mail:</label>
+            <input type="email" name="email" id="email" placeholder="judassantos@hottmanns.com">
+
+            <label for="telefone">Insira seu número de telefone:</label>
+            <input type="text" name="telefone" id="telefone" placeholder="(99) 99999-9999">
+        </div>
+        <input type="submit" value="Enviar">
+
 </body>
 </html>
