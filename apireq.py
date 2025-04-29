@@ -30,12 +30,12 @@ def call(param, caller):
         caller = "t="
     else:
         caller = "i="
-    response = requests.get(url + caller + param)
-    if (response.status_code == 200):
+    var_resposta = requests.get(url + caller + param)
+    if (var_resposta.status_code == 200):
         print("tudo certo com a requisição.")
-        print(response.text)
+        print(var_resposta.text)
     else:
-        print('erro! ' + response.status_code)
+        print('erro! ' + var_resposta.status_code)
 
 
 
