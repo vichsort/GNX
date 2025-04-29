@@ -1,6 +1,7 @@
 from flask import Flask, request
 import requests
 import uuid
+import psyco
 
 url = 'http://www.omdbapi.com/?apikey=8193de3c&' # lembrar de esconder a apikey
 listreq = []
