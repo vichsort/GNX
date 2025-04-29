@@ -1,4 +1,22 @@
 import psycopg
+from apireq import var_resposta
+
+id = var_resposta["imdbID"]
+titulo = var_resposta["Title"]
+tipo = var_resposta["Type"]
+ano = var_resposta["Year"]
+nota = var_resposta["Rated"]
+lancamento = var_resposta["Released"]
+duracao = var_resposta["Runtime"]
+genero = var_resposta["Genre"]
+diretor = var_resposta["Director"]
+escritores = var_resposta["Writers"]
+sinopse = var_resposta["Plot"]
+linguagem = var_resposta["Language"]
+pais = var_resposta["Country"]
+premiacoes = var_resposta["Awards"]
+poster = var_resposta["Poster"]
+avaliacoes = var_resposta["Ratings"] + var_resposta["Metascore"] + var_resposta["imdbRating"] + var_resposta["imdbVotes"]
 
 with psycopg.connect("dbname=gnx user=postgres host=164.90.152.205 port=80 password=3f@db") as conn:
 
