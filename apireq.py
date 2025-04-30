@@ -2,8 +2,9 @@ from flask import Flask, request
 import requests
 import uuid
 import psyco
+from config import apikey
 
-url = 'http://www.omdbapi.com/?apikey=8193de3c&' # lembrar de esconder a apikey
+url = f'http://www.omdbapi.com/?apikey={apikey}'
 listreq = []
 
 app = Flask(__name__)
@@ -35,6 +36,7 @@ def call(param, caller):
     if (var_resposta.status_code == 200):
         print("tudo certo com a requisição.")
         print(var_resposta.text)
+        psyco.catcher(var_resposta);
     else:
         print('erro! ' + var_resposta.status_code)
 
