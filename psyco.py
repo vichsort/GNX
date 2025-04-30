@@ -1,4 +1,8 @@
 import psycopg
+from config import db_name, db_host, db_password, db_port, db_user
+
+def db_info():
+    return psycopg.connect(f'dbname={db_name} user={db_user} host={db_host} port={db_port} password={db_password}')
 
 def catcher(param): 
     id = param["imdbID"]
@@ -16,22 +20,83 @@ def catcher(param):
     pais = param["Country"]
     premiacoes = param["Awards"]
     poster = param["Poster"]
-    avaliacoes = param["Ratings"] + param["Metascore"] + param["imdbRating"] + param["imdbVotes"]
+    avaliacoes = param["Ratings"]
+    metascore = param["Metascore"]
+    imdbrating = param["imdbRating"]
+    imdbvotes = param["imdbVotes"]
 
-with psycopg.connect("dbname=gnx user=postgres host=164.90.152.205 port=80 password=3f@db") as conn:
+    with db_info() as conn:
+        with conn.cursor() as cur:
+            cur.execute("""
+                        INSERT INTO filmes_series (
+                        id, 
+                        tipo, 
+                        ano, 
+                        nota, 
+                        lancamento, 
+                        duracao, 
+                        genero, 
+                        diretor, 
+                        escritores, 
+                        sinopse, 
+                        linguagem, 
+                        pais, 
+                        premiacoes, 
+                        poster, 
+                        avaliacoes,
+                        metascore,
+                        imdbrating,
+                        imdbvotes
+                        )
+                            VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')
+                        """, (
+                            id, 
+                            tipo, 
+                            ano, 
+                            nota, 
+                            lancamento, 
+                            duracao, 
+                            genero, 
+                            diretor, 
+                            escritores, 
+                            sinopse, 
+                            linguagem, 
+                            pais, 
+                            premiacoes, 
+                            poster, 
+                            avaliacoes,
+                            metascore,
+                            imdbrating,
+                            imdbvotes
+                            ))
 
-    with conn.cursor() as cur:
-        cur.execute(
-            "INSERT INTO test (id, titulo, tipo, ano, nota, lancamento, duracao, genero, diretor, escritores, sinopse, linguagem, pais, premiacoes, poster, avaliacoes) VALUES (%s, %s)",
-            (id, titulo, tipo, ano, nota, lancamento, duracao, genero, diretor, escritores, sinopse, linguagem, pais, premiacoes, poster, avaliacoes))
 
-        cur.execute("SELECT * FROM test")
-        print(cur.fetchone())
-        cur.executemany(
-            "INSERT INTO test (num) values (%s)",
-            [(33,), (66,), (99,)])
-        cur.execute("SELECT id, num FROM test order by num")
-        for record in cur:
-            print(record)
 
+
+def generator():
+    with db_info() as conn:
+        with conn.cursor() as cur: 
+            cur.execute("""
+                CREATE TABLE IF NOT EXISTS requisitados (
+                    id PRIMARY KEY, 
+                    titulo TEXT,
+                    tipo TEXT,
+                    ano TEXT,
+                    nota: TEXT,
+                    lancamento TEXT,
+                    duracao TEXT,
+                    genero TEXT,
+                    diretor TEXT,
+                    escritores TEXT,
+                    sinopse TEXT,
+                    linguagem TEXT,
+                    pais TEXT,
+                    premiacoes TEXT,
+                    poster TEXT,
+                    avaliacoes TEXT,
+                    metascore TEXT,
+                    imdbrating TEXT,
+                    imdbvotes TEXT
+                );
+            """) 
         conn.commit()
