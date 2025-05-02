@@ -1,44 +1,32 @@
-<!-- templates/index.html -->
-<!DOCTYPE html>
-<html lang="pt-BR">
+<!doctype html>
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Busca OMDb</title>
+  <meta charset="UTF-8">
+  <title>Busca de Filmes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-  />
+    rel="stylesheet"/>
 </head>
 <body class="bg-light">
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container">
-      <a class="navbar-brand" href="{{ url_for('home') }}">GNX</a>
-      <div class="collapse navbar-collapse">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('home') }}">Início</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
   <main class="container py-5">
-    <h1 class="mb-4">Buscar Filme/Série na OMDb (via GNX)</h1>
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
+    <h1 class="mb-4">Pesquisa de filmes via GNX!</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %} <!-- mensagens de erro aqui-->
       {% if messages %}
-        {% for category, msg in messages %}
-          <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-            {{ msg }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-          </div>
-        {% endfor %}
+        <div class="mt-4">
+          {% for category, msg in messages %}
+            <div class="alert alert-{{ 'warning' if category=='warning' else 'danger' if category=='danger' else 'success' }} alert-dismissible fade show" role="alert">
+              {{ msg }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          {% endfor %}
+        </div>
       {% endif %}
     {% endwith %}
 
-    <form action="{{ url_for('buscar') }}" method="post" class="row gy-3">
+    <form class="row g-3" method="post" action="{{ url_for('buscar') }}">
       <div class="col-md-4">
         <label for="caller" class="form-label">Buscar por</label>
         <select class="form-select" id="caller" name="caller" required>
@@ -53,25 +41,45 @@
           class="form-control"
           id="info"
           name="info"
-          placeholder="Ex: tt0111161 ou The Shawshank Redemption"
+          placeholder="Ex: tt1877830 ou The Batman"
           required
         />
       </div>
       <div class="col-12">
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <button type="submit" class="btn btn-primary">Buscar</button>
       </div>
     </form>
 
-    {% if result and ('data' in result) %}
-    <hr class="my-5" />
-    <h2>Resultado</h2>
-    <p><strong>Ticket:</strong> {{ result['ticket'] }}</p>
-    <div class="card">
-      <div class="card-body">
-        <pre class="mb-0">{{ result['data'] | tojson(indent=2) }}</pre>
+
+    {% if result %}     <!-- resultado que vai ser mostrado -->
+      <div class="card mt-5 shadow-sm">
+        <div class="row g-0">
+            {% if result.Poster and result.Poster != 'N/A' %}
+            <div class="col-md-4">
+            <img src="{{ result.Poster }}" class="img-fluid rounded-start" alt="Poster de {{ result.Title }}">
+            </div>
+            {% endif %}
+            <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{ result.Title }} ({{ result.Year }})</h5> <!-- Vai indo... -->
+              <p class="card-text"><strong>Gênero:</strong> {{ result.Genre }}</p>
+              <p class="card-text"><strong>Direção:</strong> {{ result.Director }}</p>
+              <p class="card-text"><strong>Atores:</strong> {{ result.Actors }}</p>
+              <p class="card-text"><strong>Sinopse:</strong> {{ result.Plot }}</p>
+              <p class="card-text"><strong>Idioma:</strong> {{ result.Language }}</p>
+              <p class="card-text"><strong>País:</strong> {{ result.Country }}</p>
+              <p class="card-text"><strong>Prêmios:</strong> {{ result.Awards }}</p>
+              <hr>
+              <p class="card-text"><small class="text-muted">Rating IMDB: {{ result.imdbRating }}/10</small></p>
+              <p class="card-text"><small class="text-muted">Metascore: {{ result.Metascore }}</small></p>
+              <p class="card-text"><small class="text-muted">Bilheteria: {{ result.BoxOffice }}</small></p>
+            </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  {% endif %}
+    {% endif %}
+
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
