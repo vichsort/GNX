@@ -1,4 +1,4 @@
-# 🥇 Instalação
+# 🥇 GNX
 GNX é uma ferramenta responsável por adquirir informações sobre um filme em cartaz. Com a GNX você pode pesquisar por um nome e encontrar tudo a respeito de um título das telas quentes do cinema. Algumas das informações que você pode encontrar aqui são:
 - Id na IMDB
 - Data de lançamento
@@ -46,12 +46,14 @@ Para usar da forma preferível, usando a aplicação Web desenvolvida pela dupla
 2. Acesse o site e insira o tipo da requisição (título ou id)
 3. Insira a informação respectiva ao tipo selecionado
 4. Clique no botão "Enviar"
+Assim, você deve poder pesquisar um filme ou série e obter resultado em sua tela!
 
 ### 💻 Método 2 (Cliente REST):
 Se preferir apenas realizar a requisição inserindo um JSON por meio de algum REST Client (como Postman, Insomnia, etc.), siga os seguintes passos:
 1. Selecione o tipo de dado que você enviará (title ou id)
 2. Envie para o seguinte servidor local sua requisição: http://127.0.0.1:5000/`(tipo do dado)`
 3. Coloque no corpo da requisição um metadado JSON contendo o argumento "info" e sua equivalente resposta.
+Assim, você deve poder pesquisar um filme ou série e obter resultado em seu terminal!
 
 
 ## 📂 Estrutura do Projeto `GNX`
@@ -78,6 +80,7 @@ Usando alguns dos princípios da nomenclatura SOLID, os arquivos foram separados
 A princípio, a atividade consiste em realizar positivamente uma requisição usufruindo a API gratuita da OMDB (você pode ver sobre ela [aqui](http://www.omdbapi.com/)). Realizando corretamente a requisição, guardamos os resultados separadamente em colunas dentro de um banco de dados relacional Postgres. <Br>
 Contudo, a dupla decidiu aprimorar o projeto e desenvolver um sistema num website que realize a requisição com inserção apartir de um formulário HTML disposto em um servidor Flask local. <br>
 Tendo isso em vista, ainda se é possível realizar a requisição apenas com os métodos HTTP (como usando Postman, Insomnia etc) apenas enviando a http://127.0.0.1:5000/{title ou id} um metadado JSON contendo o parâmetro "info" - Como explicado no método 2.
+Por fim, pode-se dizer que o trabalho conclui de forma espetacular seu trabalho de realizar requisições para a API OMDb - e inclusive, concluindo-a com luxo e extravagância -. Isso, é `GNX`.
 
 ## 💡 Planos
-O Projeto GNX será melhorado constantemente para adequar-se aos padrões de segurança e escalabilidade. Futuramente, este projeto será publicado como plataforma de pesquisas por muitas outras qualificações dentro da API OMDB, tornando-se uma aplicação viável que também tornará-se uma forma de realizar _reviews_ e avaliações sobre os filmes e séries encontrados dentro da mesma.
+O Projeto GNX será melhorado constantemente para adequar-se aos padrões de segurança e escalabilidade. Futuramente, este projeto será publicado como plataforma de pesquisas por muitas outras qualificações dentro da API OMDB, tornando-se uma aplicação viável que também irá se tornar uma forma de realizar _reviews_ e avaliações sobre os filmes e séries encontrados dentro da mesma.
