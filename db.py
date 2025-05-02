@@ -1,8 +1,13 @@
 import psycopg
 from config import db_name, db_host, db_password, db_port, db_user
 
+# nada de muito novo por aqui. Não
+# quero reinventar a roda, nao sei
+# mexer com o psycopg e nem o mezzo
+# entao nao vou mentir que foi a parte
+# mais trabalhosa kkkkkkkkkk
 
-def db_info():
+def db_info(): # informacoes gerais
     return psycopg.connect(
         dbname=db_name,
         user=db_user,
@@ -13,7 +18,7 @@ def db_info():
 
 
 def generator():
-    with db_info() as conn:
+    with db_info() as conn: # separa as informacoes pra usar de cursor
         with conn.cursor() as cur:
             cur.execute("""
                 CREATE TABLE IF NOT EXISTS filmes_series (
@@ -37,10 +42,16 @@ def generator():
                     imdbvotes  TEXT
                 );
             """)
-        conn.commit()
+        conn.commit() # comita uma tabela com essas informacao caso nao tenha (so pra garantir)
 
 
 def catcher(param):
+    # provavelmente a parte mais burra do código todo kkkkkkkkkkkkkk
+    # mas eu não sei exatamente como fazer de outra forma
+    # "CATCHER" é o receptor do apireq, que separa todas
+    # as coisas individualmente do JSOn que ele recebeu
+    # pra passar pra execução ali embaixo
+
     imdb_id    = param.get("imdbID")
     titulo     = param.get("Title")
     tipo       = param.get("Type")
@@ -79,7 +90,7 @@ def catcher(param):
                 )
                 ON CONFLICT (imdb_id) DO NOTHING
                 """,
-                (
+                ( # valores ai
                     imdb_id, titulo, tipo, ano,
                     nota, lancamento, duracao, genero,
                     diretor, escritores, sinopse, linguagem,
