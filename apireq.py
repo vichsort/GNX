@@ -39,19 +39,19 @@ def call(param=None, caller=None):
         caller = request.args.get('type')
         param = request.args.get('info')
 
-    key = 't' if caller == 'title' else 'i'     # operador ternario ridiculo (js >>>)
-    full_url = f"{url}{key}={param}"            # imagino que isso não seja seguro
+    key = 't' if caller == 'title' else 'i'          # operador ternario ridiculo (js >>>)
+    full_url = f"{url}{key}={param}"                 # imagino que isso não seja seguro
 
-    resp = requests.get(full_url)               # realiza o GET na API
+    resp = requests.get(full_url)                    # realiza o GET na API
     if resp.status_code == 200:
         data = resp.json()
         if data.get('Response') == 'True':
-            print("Requisição bem-sucedida:", data) # teste por agora
+            print("Requisição bem-sucedida:", data)  # printa no console
             db.catcher(data) # aqui a magica acontece
             return data, 200
         else:
             print(f"OMDb erro: {data.get('Error')}") # quando o erro é no omdb
             return {'error': data.get('Error')}, 502
     else:
-        print(f"req erro: {resp.status_code}") # quando o erro é meu
+        print(f"req erro: {resp.status_code}")       # quando o erro é meu
         return {'error': 'HTTP ' + str(resp.status_code)}, resp.status_code
